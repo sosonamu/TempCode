@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BasicAction : MonoBehaviour
+        {
+        public int JumpState = 1; //일반점프 개수
+        public int AirJumpSt; //공중점프 개수
+        public float JumpPower; //점프 세기
+        //========================================================================================
+
+        private void OnCollisionEnter2D(Collision2D collision){
+            Rigidbody2D Player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+            if(collision.gameObject.tag == "Ground" && Player.velocity.y <= 0){
+            JumpState = 1;
+            }
+        }
+
+        void Update()
+        {
+        Rigidbody2D Player = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        //========================================================================================
+        if(Input.GetKey(KeyCode.LeftShift)){//Slide                        
+            this.transform.localScale = new Vector3(2.0f, 1.0f, 0.0f);     
+            transform.localPosition = new Vector3(-0.5f, 0, 1);              
+        }                                                                  
+        else{                               //Stand                           
+            this.transform.localScale = new Vector3(1.0f, 2.0f, 0.0f);     
+            transform.localPosition = new Vector3(0, 0.5f, 0);             
+        }                                                                  
+        //========================================================================================
+        if(JumpState == 1 && Input.GetKey(KeyCode.Space)){//Normal Jump
+            JumpState -= 1;
+            Player.velocity = new Vector2(0, 0);
+            Player.AddForce(Vector2.up * JumpPower,ForceMode2D.Impulse); 
+        }
+        else if(AirJumpSt >= 1 && Input.GetKeyDown(KeyCode.Space)){//Air Jump
+            AirJumpSt -= 1;
+            Player.velocity = new Vector2(0, 0);
+            Player.AddForce(Vector2.up * JumpPower,ForceMode2D.Impulse); 
+        }
+        //======================================================================================== 
+        }
+        }
