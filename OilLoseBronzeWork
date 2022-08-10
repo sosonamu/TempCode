@@ -38,7 +38,7 @@ public class BasicAction : MonoBehaviour
             AirJumpSt -= 1;
             Player.velocity = new Vector2(0, 0);
             Player.AddForce(Vector2.up * JumpPower,ForceMode2D.Impulse); 
-        }
+        } 
         //======================================================================================== 
         }
         }
