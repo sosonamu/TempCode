@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Move : MonoBehaviour
+        {
+        private Vector3 OriPos; //본래의 좌표 값
+        public float Limit; //움직일 최대 거리
+        public bool doCycle; //순환 기능을 사용하는가?
+        public float Speed; //움직이는 속도
+        //========================================================================================
+
+        void Start()
+        {
+        //========================================================================================
+            OriPos = transform.position;
+            Limit = OriPos.x - Limit;
+        //======================================================================================== 
+        }
+
+        void Update()
+        {
+        //========================================================================================
+        if(doCycle){
+            if(transform.position.x <= Limit){
+                transform.position = OriPos;
+            }
+            else{
+                transform.position -= new Vector3(Speed * Amplifier.Amp * Time.deltaTime * 60, 0, 0);
+            }
+        }
+        else{
+            transform.position -= new Vector3(Speed * Amplifier.Amp, 0, 0);
+        }
+        //========================================================================================
+        }
+        }
